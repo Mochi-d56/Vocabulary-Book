@@ -111,6 +111,7 @@
 }
 
 
+
     function resetExclusions() {
       excludedIndexes = [];
       updateCharacter();
@@ -121,7 +122,7 @@
       return excludedIndexes.includes(index);
     }
 
-    function updateButtonStates() {
+   function updateButtonStates() {
   var allExcluded = excludedIndexes.length >= japanese.length * 2;
   var onlyCurrentLeft = excludedIndexes.length === japanese.length * 2 - 2;
 
@@ -143,16 +144,8 @@
 }
 
 
-    function resetToFirst() {
-  var selectedOption = document.getElementById("selection").value;
-  if (selectedOption === "A") {
-    excludedIndexes = excludedIndexesA;
-  } else if (selectedOption === "B") {
-    excludedIndexes = excludedIndexesB;
-  } else if (selectedOption === "C") {
-    excludedIndexes = excludedIndexesC;
-  }
 
+    function resetToFirst() {
   currentIndex = 0;
   while (isExcluded(currentIndex) && currentIndex < japanese.length * 2) {
     currentIndex++;
@@ -160,6 +153,7 @@
   updateCharacter();
   updateButtonStates();
 }
+
 
 
   </script>
