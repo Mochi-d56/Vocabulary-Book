@@ -25,22 +25,39 @@
     var japanese = [];
     var currentIndex = -1;
     var excludedIndexes = [];
+    let excludedIndexesA = [];
+    let excludedIndexesB = [];
+    let excludedIndexesC = [];
+    let excludedIndexesD = [];
 
     function initialize() {
-      var selectedOption = document.getElementById("selection").value;
-      if (selectedOption === "A") {
-        english = english1;
-        japanese = japanese1;
-      } else if (selectedOption === "B") {
-        english = english2;
-        japanese = japanese2;
-      } else if (selectedOption === "C") {
-        english = english3;
-        japanese = japanese3;
-      } else if (selectedOption === "D") {
-        english = english4;
-        japanese = japanese4;
-      }
+  var selectedOption = document.getElementById("selection").value;
+  if (selectedOption === "A") {
+    english = english1;
+    japanese = japanese1;
+    excludedIndexes = excludedIndexesA; // 選択されたセレクトボックスに応じた除外インデックスのリストを使用
+  } else if (selectedOption === "B") {
+    english = english2;
+    japanese = japanese2;
+    excludedIndexes = excludedIndexesB;
+  } else if (selectedOption === "C") {
+    english = english3;
+    japanese = japanese3;
+    excludedIndexes = excludedIndexesC;
+  } else if (selectedOption === "D") {
+    english = english4;
+    japanese = japanese4;
+    excludedIndexes = excludedIndexesD;
+  }
+
+  currentIndex = 0;
+  while (isExcluded(currentIndex) && currentIndex < japanese.length * 2) {
+    currentIndex++;
+  }
+  updateCharacter();
+  updateButtonStates();
+}
+
         
       currentIndex = 0;
       excludedIndexes = [];
@@ -91,7 +108,7 @@
   }
   updateButtonStates();
   nextCharacter();
-    }
+}
 
 
     function resetExclusions() {
@@ -127,6 +144,15 @@
 
 
     function resetToFirst() {
+  var selectedOption = document.getElementById("selection").value;
+  if (selectedOption === "A") {
+    excludedIndexes = excludedIndexesA;
+  } else if (selectedOption === "B") {
+    excludedIndexes = excludedIndexesB;
+  } else if (selectedOption === "C") {
+    excludedIndexes = excludedIndexesC;
+  }
+
   currentIndex = 0;
   while (isExcluded(currentIndex) && currentIndex < japanese.length * 2) {
     currentIndex++;
