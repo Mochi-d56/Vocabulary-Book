@@ -37,8 +37,11 @@
       } else if (selectedOption === "C") {
         english = english3;
         japanese = japanese3;
+      } else if (selectedOption === "D") {
+        english = english4;
+        japanese = japanese4;
       }
-
+        
       currentIndex = 0;
       excludedIndexes = [];
       updateCharacter();
@@ -141,6 +144,7 @@
     <option value="A">A</option>
     <option value="B">B</option>
     <option value="C">C</option>
+    <option value="D">追試験範囲の単語</option>
   </select>
   <div class="button-container">
     <button id="previousButton" onclick="previousCharacter()">戻る</button>
