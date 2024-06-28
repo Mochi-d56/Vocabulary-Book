@@ -79,15 +79,17 @@
     }
 
     function excludeCurrentCharacter() {
-      var pairedIndex = (currentIndex % 2 === 0) ? currentIndex + 1 : currentIndex - 1;
-      if (!isExcluded(currentIndex)) {
-        excludedIndexes.push(currentIndex);
-      }
-      if (!isExcluded(pairedIndex)) {
-        excludedIndexes.push(pairedIndex);
-      }
-      nextCharacter();
+  var pairedIndex = (currentIndex % 2 === 0) ? currentIndex + 1 : currentIndex - 1;
+  if (!isExcluded(currentIndex)) {
+    excludedIndexes.push(currentIndex);
+  }
+  if (!isExcluded(pairedIndex)) {
+    excludedIndexes.push(pairedIndex);
+  }
+  updateButtonStates();
+  nextCharacter();
     }
+
 
     function resetExclusions() {
       excludedIndexes = [];
@@ -100,21 +102,36 @@
     }
 
     function updateButtonStates() {
-      var allExcluded = excludedIndexes.length >= japanese.length * 2;
-      var onlyCurrentLeft = excludedIndexes.length === japanese.length * 2 - 2;
-      document.getElementById("previousButton").disabled = allExcluded || (currentIndex === 0 && isExcluded(0));
-      document.getElementById("nextButton").disabled = allExcluded || (currentIndex === (japanese.length * 2 - 1) && isExcluded(japanese.length * 2 - 1));
-      document.getElementById("resetButton").disabled = allExcluded || onlyCurrentLeft;
-    }
+  var allExcluded = excludedIndexes.length >= japanese.length * 2;
+  var onlyCurrentLeft = excludedIndexes.length === japanese.length * 2 - 2;
+
+  // Find first non-excluded index
+  var firstNonExcludedIndex = 0;
+  while (isExcluded(firstNonExcludedIndex) && firstNonExcludedIndex < japanese.length * 2) {
+    firstNonExcludedIndex++;
+  }
+
+  // Find last non-excluded index
+  var lastNonExcludedIndex = japanese.length * 2 - 1;
+  while (isExcluded(lastNonExcludedIndex) && lastNonExcludedIndex >= 0) {
+    lastNonExcludedIndex--;
+  }
+
+  document.getElementById("previousButton").disabled = allExcluded || currentIndex === firstNonExcludedIndex;
+  document.getElementById("nextButton").disabled = allExcluded || currentIndex === lastNonExcludedIndex;
+  document.getElementById("resetButton").disabled = allExcluded || onlyCurrentLeft;
+}
+
 
     function resetToFirst() {
-      currentIndex = 0;
-      while (isExcluded(currentIndex)) {
-        currentIndex++;
-      }
-      updateCharacter();
-      updateButtonStates();
-    }
+  currentIndex = 0;
+  while (isExcluded(currentIndex) && currentIndex < japanese.length * 2) {
+    currentIndex++;
+  }
+  updateCharacter();
+  updateButtonStates();
+}
+
 
   </script>
 </head>
